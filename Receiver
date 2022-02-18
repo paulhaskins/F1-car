@@ -1,0 +1,22 @@
+from microbit import *
+import radio
+
+
+
+radio.on()
+
+
+def Startup():
+    
+
+
+
+
+While True:
+    # Receive signals
+    signalsReceived = radio.receive()
+    
+    #Startup signal
+    if signalsReceived == "Startup":
+        StartUp():
+    
