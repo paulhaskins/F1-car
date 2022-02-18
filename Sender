@@ -17,4 +17,7 @@ while True:
         display.show(Image.SAD)
         else:
             display.show(Image.SMILE)
-        
+            
+def Movement():
+     moveFB= accelerometer.get_z()
+     radio.send(moveFB)
