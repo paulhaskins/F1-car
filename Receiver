@@ -1,12 +1,33 @@
 from microbit import *
 import radio
+import kitronik
 
 
 
 radio.on()
+radio.config(channel = 5)
 
 
+def Forward():
+def Right(): 
+def Left(): 
+def Reverse(): 
+    
+
+#Once turned on in loop below
 def Startup():
+    if signalsReceived == "fwd":
+        Foward():
+    elif signalsReceived == "right":
+        Right():
+    elif signalsReceived == "left":
+        Left():
+    elif signalsReceived == "reverse":
+        Reverse():
+    else:
+        return:
+            
+    
     
 
 
@@ -19,4 +40,5 @@ While True:
     #Startup signal
     if signalsReceived == "Startup":
         StartUp():
+    
     
