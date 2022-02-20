@@ -1,0 +1,27 @@
+
+#Initialising BLE
+def on_bluetooth_connected():
+    basic.show_icon(IconNames.UMBRELLA)
+    basic.clear_screen()
+bluetooth.on_bluetooth_connected(on_bluetooth_connected)
+
+def on_button_pressed_a():
+    basic.show_icon(IconNames.HEART)
+    basic.pause(100)
+    basic.clear_screen()
+input.on_button_pressed(Button.A, on_button_pressed_a)
+
+def on_uart_data_received():
+    global data
+    data = bluetooth.uart_read_until(serial.delimiters(Delimiters.HASH))
+    basic.show_string(data)
+bluetooth.on_uart_data_received(serial.delimiters(Delimiters.HASH), on_uart_data_received)
+
+def on_button_pressed_b():
+    basic.show_icon(IconNames.NO)
+    basic.pause(100)
+    basic.clear_screen()
+input.on_button_pressed(Button.B, on_button_pressed_b)
+
+data = ""
+bluetooth.start_uart_service()
