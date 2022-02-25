@@ -1,7 +1,14 @@
 # Connect bluetooth
 
 def on_bluetooth_connected():
-    basic.show_icon(IconNames.UMBRELLA)
+    basic.show_leds("""
+        # # # # .
+                # . . . #
+                # . # # .
+                # . . . #
+                # # # # .
+    """)
+    soundExpression.giggle.play()
     basic.clear_screen()
 bluetooth.on_bluetooth_connected(on_bluetooth_connected)
 
