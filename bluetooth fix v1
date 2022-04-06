@@ -1,0 +1,107 @@
+# Connect bluetooth
+
+#Initialising BLE
+def on_bluetooth_connected():
+    basic.show_icon(IconNames.UMBRELLA)
+    basic.clear_screen()
+bluetooth.on_bluetooth_connected(on_bluetooth_connected)
+
+
+
+def on_uart_data_received():
+    global data
+    data = bluetooth.uart_read_until(serial.delimiters(Delimiters.HASH))
+    basic.show_string(data)
+bluetooth.on_uart_data_received(serial.delimiters(Delimiters.HASH), on_uart_data_received)
+
+
+
+data = ""
+bluetooth.start_uart_service()
+
+# Testing basics
+
+def on_button_pressed_a():
+    basic.show_icon(IconNames.HEART)
+    basic.pause(100)
+    basic.clear_screen()
+input.on_button_pressed(Button.A, on_button_pressed_a)
+
+def on_button_pressed_b():
+    basic.show_icon(IconNames.NO)
+    basic.pause(100)
+    basic.clear_screen()
+input.on_button_pressed(Button.B, on_button_pressed_b)
+
+# When press a "event" depending on which button different action
+
+def on_mes_dpad_controller_id_microbit_evt():
+    global speed
+    if control.event_value() == EventBusValue.MES_DPAD_BUTTON_A_DOWN:
+        Kitronik_Robotics_Board.motor_on(Kitronik_Robotics_Board.Motors.MOTOR1,
+            Kitronik_Robotics_Board.MotorDirection.FORWARD,
+            speed)
+        basic.show_leds("""
+            . . # . .
+                        . # # # .
+                        # . # . #
+                        . . # . .
+                        . . # . .
+        """)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_A_UP:
+        kitronik_motor_driver.motor_off(kitronik_motor_driver.Motors.MOTOR1)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_B_DOWN:
+        kitronik_motor_driver.motor_on(kitronik_motor_driver.Motors.MOTOR1,
+            kitronik_motor_driver.MotorDirection.REVERSE,
+            speed)
+        Kitronik_Robotics_Board.motor_on(Kitronik_Robotics_Board.Motors.MOTOR3,
+            Kitronik_Robotics_Board.MotorDirection.FORWARD,
+            50)
+        basic.show_leds("""
+            . . # . .
+                        . . # . .
+                        # . # . #
+                        . # # # .
+                        . . # . .
+        """)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_B_UP:
+        kitronik_motor_driver.motor_off(kitronik_motor_driver.Motors.MOTOR1)
+        Kitronik_Robotics_Board.motor_off(Kitronik_Robotics_Board.Motors.MOTOR3)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_C_DOWN:
+         Kitronik_Robotics_Board.motor_on(Kitronik_Robotics_Board.Motors.MOTOR1,
+            Kitronik_Robotics_Board.MotorDirection.FORWARD,
+            100)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_C_UP:
+            kitronik_motor_driver.motor_off(kitronik_motor_driver.Motors.MOTOR2)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_D_DOWN:
+        Kitronik_Robotics_Board.motor_on(Kitronik_Robotics_Board.Motors.MOTOR3,
+            Kitronik_Robotics_Board.MotorDirection.FORWARD,
+            50)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_D_UP:
+        Kitronik_Robotics_Board.motor_off(Kitronik_Robotics_Board.Motors.MOTOR3)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_1_DOWN:
+        pass
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_1_UP:
+        speed = 100
+        basic.show_leds("""
+            . # . # .
+                        # . # . #
+                        # . . . #
+                        # . . . #
+                        # . . . #
+        """)
+    elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_2_DOWN:
+        speed = 50
+        basic.show_leds("""
+            # . . . #
+                        # . . . #
+                        # # # # #
+                        # . . . #
+                        # . . . #
+        """)
+control.on_event(EventBusSource.MES_DPAD_CONTROLLER_ID,
+    EventBusValue.MICROBIT_EVT_ANY,
+    on_mes_dpad_controller_id_microbit_evt)
+
+speed = 0
+speed = 10
