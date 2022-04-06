@@ -65,7 +65,7 @@ def on_mes_dpad_controller_id_microbit_evt():
             Kitronik_Robotics_Board.MotorDirection.FORWARD,
             100)
     elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_C_UP:
-            kitronik_motor_driver.motor_off(kitronik_motor_driver.Motors.MOTOR2)
+            kitronik_motor_driver.motor_off(kitronik_motor_driver.Motors.MOTOR4)
     elif control.event_value() == EventBusValue.MES_DPAD_BUTTON_D_DOWN:
         Kitronik_Robotics_Board.motor_on(Kitronik_Robotics_Board.Motors.MOTOR3,
             Kitronik_Robotics_Board.MotorDirection.FORWARD,
